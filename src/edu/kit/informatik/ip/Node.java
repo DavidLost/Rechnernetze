@@ -7,13 +7,15 @@ import java.util.List;
 public class Node {
 
     private final IP ip;
-    private final List<Node> children;
+    private Node root;
+    private List<Node> children;
 
-    public Node(IP ip, List<IP> children) {
+    public Node(IP ip, Node root, List<IP> children) {
         this.ip = ip;
+        this.root = root;
         this.children = new ArrayList<>();
         for (IP child : children) {
-            this.children.add(new Node(child, Collections.emptyList()));
+            this.children.add(new Node(child, this, Collections.emptyList()));
         }
     }
 
@@ -21,9 +23,15 @@ public class Node {
         return ip;
     }
 
+    public Node getRoot() {
+        return root;
+    }
+
     public List<Node> getChildren() {
         return children;
     }
 
-
+    public void setRoot(final Node root) {
+        this.root = root;
+    }
 }
