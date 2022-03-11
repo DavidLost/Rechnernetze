@@ -3,6 +3,7 @@ package edu.kit.informatik.ip;
 import edu.kit.informatik.ParseException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class IP implements Comparable<IP> {
@@ -70,6 +71,15 @@ public class IP implements Comparable<IP> {
             else if (address[i] > o.address[i]) return 1;
         }
         return 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        return Arrays.equals(address, ((IP) o).address);
     }
 
     public IP copy() {

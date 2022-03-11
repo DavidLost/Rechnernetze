@@ -6,10 +6,12 @@ import edu.kit.informatik.ip.Node;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Network {
 
-    Node root;
+    private Node root;
+    //List<Node> roots = new ArrayList<>();
 
     public Network(final IP root, final List<IP> children) {
         this.root = new Node(root.copy(), null, IP.copy(children));
@@ -24,7 +26,6 @@ public class Network {
         boolean isRoot = true;
 
         for (String ipString : ipStrings) {
-            //System.out.println(wasFirst);
             if (ipString.startsWith("(")) {
                 root = addChild(root, ipString.substring(1));
             }
@@ -53,10 +54,7 @@ public class Network {
                 System.out.print(child.getIp() + " ");
             }
             System.out.println();
-            //System.out.println(c+" - "+currentIP+" - "+wasFirst+" - "+wasBClosed);
         }
-
-        System.out.println(root.getIp());
 
     }
 
@@ -67,12 +65,16 @@ public class Network {
         return newChild;
     }
 
+    public IP getRootIP() {
+        return root.getIp();
+    }
+
     public boolean add(final Network subnet) {
         return false;
     }
 
     public List<IP> list() {
-        return getIPsRecursive(new ArrayList<>(), root);
+        return getAllIPsRecursive(new ArrayList<>(), root).stream().sorted().collect(Collectors.toList());
     }
 
     public boolean connect(final IP ip1, final IP ip2) {
@@ -84,7 +86,7 @@ public class Network {
     }
 
     public boolean contains(final IP ip) {
-        return false;
+        return list().contains(ip);
     }
 
     public int getHeight(final IP root) {
@@ -100,17 +102,21 @@ public class Network {
     }
 
     public String toString(IP root) {
-        return null;
+        if (!contains(root)) return "";
+        String bracketNotation = "(";
+        bracketNotation += this.root.getIp();
+
+        return bracketNotation + ")";
     }
 
     public Network copy() {
         return null;
     }
 
-    private ArrayList<IP> getIPsRecursive(ArrayList<IP> list, Node root) {
+    private ArrayList<IP> getAllIPsRecursive(ArrayList<IP> list, Node root) {
         list.add(root.getIp());
         for (Node child : root.getChildren()) {
-            getIPsRecursive(list, child);
+            getAllIPsRecursive(list, child);
         }
         return list;
     }
