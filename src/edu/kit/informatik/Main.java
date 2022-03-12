@@ -1,6 +1,7 @@
 package edu.kit.informatik;
 
 import edu.kit.informatik.ip.IP;
+import edu.kit.informatik.ip.Node;
 
 import java.util.List;
 
@@ -13,8 +14,15 @@ public class Main {
         System.out.println("-------------------");
         System.out.println(n1.list());
         System.out.println(n2.list());
-        System.out.println(n1.toString(n1.getRootIP()));
+        Node test = n2.getNode(new IP("5.5.5.5"));
+        if (test == null) {
+            System.out.println("not found :(");
+        }
+        else {
+            System.out.println(test.getIp());
+        }
         System.out.println(n2.toString(n2.getRootIP()));
+
         //test();
     }
 

@@ -7,8 +7,8 @@ import java.util.List;
 public class Node {
 
     private final IP ip;
-    private Node root;
-    private List<Node> children;
+    private final Node root;
+    private final List<Node> children;
 
     public Node(IP ip, Node root, List<IP> children) {
         this.ip = ip;
@@ -31,7 +31,7 @@ public class Node {
         return children;
     }
 
-    public void setRoot(final Node root) {
-        this.root = root;
+    @Override public String toString() {
+        return ip.toString();
     }
 }

@@ -102,15 +102,42 @@ public class Network {
     }
 
     public String toString(IP root) {
-        if (!contains(root)) return "";
-        String bracketNotation = "(";
-        bracketNotation += this.root.getIp();
-
-        return bracketNotation + ")";
+        Node rootNode = getNode(root);
+        if (rootNode == null) return "";
+        return buildStringRecursive("", rootNode, true).replace(" )", ")");
     }
 
     public Network copy() {
         return null;
+    }
+
+    public Node getNode(IP ip) {
+        return getNodeRecursive(ip, null, root);
+    }
+
+    private String buildStringRecursive(String str, Node root, boolean first) {
+        if (first) str += "(";
+        str += root.getIp() + " ";
+        for (Node child : root.getChildren()) {
+            if (child.getChildren().isEmpty()) {
+                str = buildStringRecursive(str, child, false);
+            }
+            else {
+                str = buildStringRecursive(str, child, true);
+            }
+        }
+        if (first) str += ") ";
+        return str;
+    }
+
+    private Node getNodeRecursive(IP searched, Node found, Node root) {
+        if (root.getIp().equals(searched)) {
+            return root;
+        }
+        for (Node child : root.getChildren()) {
+            found = getNodeRecursive(searched, found, child);
+        }
+        return found;
     }
 
     private ArrayList<IP> getAllIPsRecursive(ArrayList<IP> list, Node root) {
@@ -120,4 +147,6 @@ public class Network {
         }
         return list;
     }
+
+
 }
