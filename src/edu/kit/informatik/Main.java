@@ -10,18 +10,18 @@ public class Main {
     public static void main(String[] args) throws ParseException {
 
         Network n1 = new Network("(85.193.148.81 (141.255.1.133 122.117.67.158 0.146.197.108) 34.49.145.239 (231.189.0.127 77.135.84.171 39.20.222.120 252.29.23.0 116.132.83.77))");
-        Network n2 = new Network("(1.1.1.1 (2.2.2.2 3.3.3.3) 4.4.4.4 (5.5.5.5 6.6.6.6 (7.7.7.7 8.8.8.8)) 9.9.9.9)");
+        Network n2 = new Network("(1.1.1.1 (2.2.2.2 3.3.3.3) 9.9.9.9 (5.5.5.5 7.7.7.7 (6.6.6.6 8.8.8.8)) 4.4.4.4)");
         System.out.println("-------------------");
         System.out.println(n1.list());
         System.out.println(n2.list());
-        Node test = n2.getNode(new IP("5.5.5.5"));
-        if (test == null) {
-            System.out.println("not found :(");
+        System.out.println(n2.toString(n2.getRootIPs().get(0)));
+        System.out.println(n2.getHeight(n2.getRootIPs().get(0)));
+        for (List<IP> list : n2.getLevels(n2.getRootIPs().get(0))) {
+            for (IP ip : list) {
+                System.out.print(ip + " ");
+            }
+            System.out.println();
         }
-        else {
-            System.out.println(test.getIp());
-        }
-        System.out.println(n2.toString(n2.getRootIP()));
 
         //test();
     }

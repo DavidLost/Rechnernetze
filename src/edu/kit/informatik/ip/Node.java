@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Node {
+public class Node implements Comparable<Node> {
 
     private final IP ip;
     private final Node root;
@@ -33,5 +33,10 @@ public class Node {
 
     @Override public String toString() {
         return ip.toString();
+    }
+
+    @Override
+    public int compareTo(Node o) {
+        return ip.compareTo(o.ip);
     }
 }

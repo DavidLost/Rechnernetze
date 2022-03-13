@@ -14,8 +14,7 @@ public class IP implements Comparable<IP> {
     public static final int IPV4_NUMBER_AMOUNT = 4;
 
     public static final String POINT_SEPARATOR = ".";
-    //public static final String ESCAPE_CHAR = "\\";
-    private final byte[] address;
+    public final byte[] address;
 
     public IP(final String pointNotation) throws ParseException {
         String[] addrStringparts = pointNotation.split("\\" + POINT_SEPARATOR);
@@ -83,7 +82,7 @@ public class IP implements Comparable<IP> {
     }
 
     public IP copy() {
-        return new IP(address);
+        return new IP(address.clone());
     }
 
     public static List<IP> copy(List<IP> list) {
