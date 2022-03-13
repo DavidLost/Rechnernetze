@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 
 public class Network {
 
-    private Node root;
-    //List<Node> roots = new ArrayList<>();
+    //private Node root;
+    List<Node> roots = new ArrayList<>();
 
     public Network(final IP root, final List<IP> children) {
-        this.root = new Node(root.copy(), null, IP.copy(children));
+        roots.add(new Node(root.copy(), null, IP.copy(children)));
     }
 
     public Network(final String bracketNotation) throws ParseException {
@@ -74,7 +74,11 @@ public class Network {
     }
 
     public List<IP> list() {
-        return getAllIPsRecursive(new ArrayList<>(), root).stream().sorted().collect(Collectors.toList());
+        List<IP> list = new ArrayList<>();
+        for (Node root : roots) {
+            list.addAll(getAllIPsRecursive(new ArrayList<>(), root));
+        }
+        return list.stream().sorted().collect(Collectors.toList());
     }
 
     public boolean connect(final IP ip1, final IP ip2) {
